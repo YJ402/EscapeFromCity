@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     //public Camera camera;
     public FirstPersonController firstPersonController;
     public PlayerController controller;
-
+    public PlayerCondition condition;
 
 
     void Start()
@@ -38,8 +38,13 @@ public class Player : MonoBehaviour
         //camera = Camera.main;
         firstPersonController = Camera.main.GetComponent<FirstPersonController>();
         controller = GetComponent<PlayerController>();
+        condition = GetComponent<PlayerCondition>();
     }
 
+    void Init()
+    {
+
+    }
 
     void Update()
     {
