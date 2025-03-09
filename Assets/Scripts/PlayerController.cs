@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public Vector2 mouseDelta;
     Camera cam;
     Animator animator;
-    Rigidbody rigidbody;
+    public Rigidbody rigidbody;
 
     [Header("Movement")]
     Vector2 directionInput;
@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
     private bool jumpInput;
 
     [SerializeField] private float jumpPower = 2.5f;
-
+    [SerializeField] private float bounceThreshold = 2f;
 
     void Start()
     {
@@ -76,8 +76,8 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
-        Debug.Log("¶¥ÀÎ°¡?" + isGrounded);
-        Debug.Log("Á¡ÇÁ?" + jumpInput);
+        //Debug.Log("¶¥ÀÎ°¡?" + isGrounded);
+        //Debug.Log("Á¡ÇÁ?" + jumpInput);
         Jump();
         animator.SetBool("Grounded", isGrounded);
     }
@@ -134,6 +134,13 @@ public class PlayerController : MonoBehaviour
                 isGrounded = true;
                 break;
             }
+        }
+
+        float bounce = collision.relativeVelocity.magnitude/2;
+        if (collision.gameObject.layer == 6 && bounce > bounceThreshold)
+        {
+            Debug.Log("Ãæ°Ý·®:" + collision.relativeVelocity.magnitude / 2);
+            rigidbody.AddForce(contactPoints[Random.Range(0, contactPoints.Length)].normal * bounce, ForceMode.Impulse);
         }
     }
 
