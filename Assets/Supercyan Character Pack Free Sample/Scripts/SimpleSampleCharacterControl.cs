@@ -67,7 +67,7 @@ namespace Supercyan.FreeSample
             }
         }
 
-        private void OnCollisionStay(Collision collision)
+        private void OnCollisionStay(Collision collision) // 바닥이 움직여서 벽이되는 상황 또는 지형의 굴곡이 있어서 모든 콜리더가 바닥은 아닌 상황을 대비.
         {
             ContactPoint[] contactPoints = collision.contacts;
             bool validSurfaceNormal = false;

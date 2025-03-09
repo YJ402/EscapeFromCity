@@ -2142,7 +2142,7 @@ Transform:
   m_GameObject: {fileID: 5456584831522248596}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 37.45, y: 3.79, z: 68.8}
+  m_LocalPosition: {x: 52.3, y: 6.29, z: 104.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2374,7 +2374,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseDelta: {x: 0, y: 0}
   moveSpeed: 0.032
-  interpolation: 30
+  interpolation: 20
+  GroundWallThreshold: 0.79
+  jumpPower: 2.5
 --- !u!114 &6756488128164489878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2462,6 +2464,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: f5f8674a-6b92-4322-8ac7-3eab11765a12
     m_ActionName: Player/Walk[/Keyboard/capsLock]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6756488128164489877}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnJumpInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 89eecdf7-1658-46e5-b886-04b7be042185
+    m_ActionName: Player/Jump[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

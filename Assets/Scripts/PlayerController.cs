@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public Vector2 mouseDelta;
     Camera cam;
     Animator animator;
+    Rigidbody rigidbody;
 
     [Header("Movement")]
     Vector2 directionInput;
@@ -47,12 +48,20 @@ public class PlayerController : MonoBehaviour
 
     [Header("Jump")]
     private bool isGrounded;
+    [SerializeField] private float GroundWallThreshold = 0.79f;
+    HashSet<Collider> touchingGrounds = new();
+
+    private bool jumpInput;
+
+    [SerializeField] private float jumpPower = 2.5f;
+
 
     void Start()
     {
         animator = GetComponent<Animator>();
         animator.SetBool("Grounded", true);
         cam = Camera.main;
+        rigidbody = GetComponent<Rigidbody>();
 
         // 애니 플레이 속도 초기화
         //def_moveSpeed = 1 *
@@ -67,6 +76,10 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
+        Debug.Log("땅인가?" + isGrounded);
+        Debug.Log("점프?" + jumpInput);
+        Jump();
+        animator.SetBool("Grounded", isGrounded);
     }
 
     private void Move()
@@ -101,6 +114,63 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("MoveAnimPlaySpeed", moveSpeed * moveAnimPlaySpeed);
 
     }
+
+    void Jump()
+    {
+        if (jumpInput && isGrounded)
+        {
+            rigidbody.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        ContactPoint[] contactPoints = collision.contacts;
+        for (int i = 0; i < contactPoints.Length; i++)
+        {
+            if (Vector3.Dot(contactPoints[i].normal, Vector3.up) > GroundWallThreshold) // 경사가 40도 이하면 바닥으로 인식.
+            {
+                touchingGrounds.Add(collision.collider);
+                isGrounded = true;
+                break;
+            }
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        ContactPoint[] contactPoints = collision.contacts;
+        bool validSurface = false;
+        for (int i = 0; i < contactPoints.Length; i++)
+        {
+            if (Vector3.Dot(contactPoints[i].normal, Vector3.up) > GroundWallThreshold) // 테스트
+            {
+                //바닥임
+                touchingGrounds.Add(collision.collider);
+                validSurface = true;
+                break;
+            }
+        }
+        if (!validSurface)
+        {
+            //바닥 아님
+            touchingGrounds.Remove(collision.collider);
+        }
+
+        if (touchingGrounds.Count == 0)
+            isGrounded = false;
+        else isGrounded = true;
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        touchingGrounds.Remove(collision.collider);
+
+        if (touchingGrounds.Count == 0)
+            isGrounded = false;
+        else isGrounded = true;
+    }
+
     public void OnLookInput(InputAction.CallbackContext context)
     {
         mouseDelta = context.ReadValue<Vector2>();
@@ -110,7 +180,6 @@ public class PlayerController : MonoBehaviour
     public void OnDirectionInput(InputAction.CallbackContext context)
     {
         directionInput = context.ReadValue<Vector2>(); // 이미 단위벡터로 출력됨.
-        Debug.Log(directionInput);
     }
 
     public void OnCapsLock(InputAction.CallbackContext context)
@@ -122,6 +191,30 @@ public class PlayerController : MonoBehaviour
 
     public void OnJumpInput(InputAction.CallbackContext context)
     {
+        //if (context.phase == InputActionPhase.Started || context.phase == InputActionPhase.Performed)
+        if (!(context.phase == InputActionPhase.Canceled))
+        {
+            jumpInput = true;
+        }
+        else
+        {
+            jumpInput = false;
+        }
 
+        //if (context.phase == InputActionPhase.Canceled) 여기서 false로 바꿔주면 fixedupdate와 시간차이 때문에 입력이 씹힐수 있음.
+        //{
+        //    jumpInput = false; 
+        //}
     }
+
+    //if (context.phase == InputActionPhase.Disabled)
+    //    Debug.Log("비활성화");
+    //if (context.phase == InputActionPhase.Waiting)
+    //    Debug.Log("활성화");
+    //if (context.phase == InputActionPhase.Started)
+    //    Debug.Log("스타트");
+    //if (context.phase == InputActionPhase.Performed)
+    //    Debug.Log("퍼폼");
+    //if (context.phase == InputActionPhase.Canceled)
+    //    Debug.Log("취소");
 }
