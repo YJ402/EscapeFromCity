@@ -10,11 +10,20 @@ public class ZombieHead : MonoBehaviour
     {
         zombie = GetComponentInParent<Zombie>();
     }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.transform.CompareTag("Player"))
+    //    {
+    //        zombie.SteppedHead();
+    //    }
+    //}
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.CompareTag("Player"))
         {
             zombie.SteppedHead();
         }
+        
     }
 }

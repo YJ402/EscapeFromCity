@@ -5,18 +5,11 @@ using UnityEngine;
 
 public class Zombie : MonoBehaviour
 {
-    public List<GameObject> dropPref;
+    public GameObject dropPref;
+    [SerializeField] int dropCount =5;
+    [SerializeField] private  List<Mesh> ZombiePartsMesh;
 
-    void Start()
-    {
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     public void SteppedHead()
     {
@@ -25,26 +18,63 @@ public class Zombie : MonoBehaviour
 
     private void Die()
     {
+        //모든 컴포넌트 비활성화.
+        GetComponent<Collider>().enabled = false;
+        GetComponent<Animator>().enabled = false;
+        Destroy(GetComponent<Rigidbody>());
+
+        //자식 객체 삭제
+        for(int i = 0; i < transform.childCount; i++)
+        {
+            Destroy(transform.GetChild(i).gameObject);
+        }
+        
         Throw();
-        Destroy(gameObject);
+        StartCoroutine(Disappear());
     }
 
     private void Throw()
     {
         GameObject go;
         Rigidbody rig;
-        //생성
-        for (int i = 0; i < dropPref.Count; i++)
+        DropPrefAdjust dropPrefAdjust;
+        List<int> hash = new();
+        
+        while(hash.Count < dropCount)
         {
-            go = Instantiate(dropPref[i], transform.position, Random.rotation);
+            int i = Random.Range(0, ZombiePartsMesh.Count);
+            //if (hash.Contains(i)) break;
+            hash.Add(i);
+        }
+
+        //생성
+        for (int i = 0; i < dropCount; i++)
+        {
+            //객체 생성
+            go = Instantiate(dropPref, transform.position, Random.rotation);
+            go.transform.SetParent(transform, true);
+            go.transform.localScale = Vector3.one;
+            
+            //메쉬 랜덤 지정.
+            dropPrefAdjust = go.GetComponentInChildren<DropPrefAdjust>();
+            dropPrefAdjust.Init();
+            dropPrefAdjust.LoadMesh(ZombiePartsMesh[hash[i]]);
+
             //rigidbody 없다면 붙여주기
             if (!go.TryGetComponent<Rigidbody>(out rig))
             {
                 rig = go.AddComponent<Rigidbody>();
             }
             //날려주기
-            rig.AddForce(new Vector3(Random.Range(-1f, 1f), Random.Range(0f, 1f), Random.Range(-1f, 1f)), ForceMode.Impulse);
+            rig.AddForce(new Vector3(Random.Range(-0.3f, 0.3f), Random.Range(0.3f, 0.6f), Random.Range(-0.3f, 0.3f)), ForceMode.Impulse);
         }
+    }
 
+
+    IEnumerator Disappear()
+    {
+        yield return new WaitForSeconds(120f);
+
+        Destroy(gameObject);
     }
 }

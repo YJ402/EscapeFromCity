@@ -55,6 +55,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float jumpPower = 2.5f;
     [SerializeField] private float bounceThreshold = 2f;
+    [SerializeField] private LayerMask floorLayerMask;
+    [SerializeField] private LayerMask enemyheadLayerMask;
 
     void Start()
     {
@@ -136,12 +138,23 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        float bounce = collision.relativeVelocity.magnitude/2;
-        if (collision.gameObject.layer == 6 && bounce > bounceThreshold)
+        float contactPower = collision.relativeVelocity.magnitude;  
+        if ((floorLayerMask == ((1 << collision.gameObject.layer) | floorLayerMask)) && contactPower / 2f > bounceThreshold)
         {
-            Debug.Log("충격량:" + collision.relativeVelocity.magnitude / 2);
-            rigidbody.AddForce(contactPoints[Random.Range(0, contactPoints.Length)].normal * bounce, ForceMode.Impulse);
+            Debug.Log("충격량:" + contactPower);
+            rigidbody.AddForce(contactPoints[Random.Range(0, contactPoints.Length)].normal * contactPower / 2f, ForceMode.Impulse);
         }
+
+        if (enemyheadLayerMask == ((1 << collision.gameObject.layer) | enemyheadLayerMask))
+        {
+            Debug.Log("충격량:" + contactPower);
+            rigidbody.AddForce(contactPoints[Random.Range(0, contactPoints.Length)].normal * (contactPower * 1.5f), ForceMode.Impulse);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        
     }
 
     private void OnCollisionStay(Collision collision)
