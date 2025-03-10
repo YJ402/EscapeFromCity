@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 public enum MovementState
 {
@@ -57,6 +59,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float bounceThreshold = 2f;
     [SerializeField] private LayerMask floorLayerMask;
     [SerializeField] private LayerMask enemyheadLayerMask;
+
+    public Action interactAction;
 
     void Start()
     {
@@ -138,7 +142,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        float contactPower = collision.relativeVelocity.magnitude;  
+        float contactPower = collision.relativeVelocity.magnitude;
         if ((floorLayerMask == ((1 << collision.gameObject.layer) | floorLayerMask)) && contactPower / 2f > bounceThreshold)
         {
             Debug.Log("충격량:" + contactPower);
@@ -154,7 +158,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        
+
     }
 
     private void OnCollisionStay(Collision collision)
@@ -229,8 +233,8 @@ public class PlayerController : MonoBehaviour
 
     public void OnInteractionInput(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Started) ;
-            //GameManager.Instance.player.interaction
-            //액션 실행.
+        GameManager.Instance.player.interaction.interactableObject?.AddMethod();
+        if (context.phase == InputActionPhase.Started)
+            interactAction?.Invoke();
     }
 }

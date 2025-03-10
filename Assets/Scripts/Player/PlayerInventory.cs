@@ -17,4 +17,9 @@ public class PlayerInventory : MonoBehaviour
     {
         
     }
+
+    public void GetItem()
+    {
+        Debug.Log($"아이템에 넣어버리기~");
+    }
 }
