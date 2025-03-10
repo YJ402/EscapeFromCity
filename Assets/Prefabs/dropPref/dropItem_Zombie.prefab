@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7842447712944976350}
   - component: {fileID: 5744758915137289972}
-  m_Layer: 0
+  - component: {fileID: -236683248625157362}
+  m_Layer: 10
   m_Name: dropItem_Zombie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,6 +61,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-236683248625157362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1126592588545134399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e76d649fdb0d0d4fbe8572db5784709, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: c567f3c23c0a9ff418f658bb751b8616, type: 2}
 --- !u!1 &1898247074020186429
 GameObject:
   m_ObjectHideFlags: 0
@@ -73,7 +87,7 @@ GameObject:
   - component: {fileID: 5316168094993330132}
   - component: {fileID: 1173958976315089758}
   - component: {fileID: 7748539946017252269}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,4 +193,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 730a33ddfd53485499380bef67994dcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  randomMesh: 0

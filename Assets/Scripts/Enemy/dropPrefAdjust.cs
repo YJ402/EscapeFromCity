@@ -8,7 +8,7 @@ public class DropPrefAdjust : MonoBehaviour
     MeshRenderer meshrenderer;
     MeshFilter filter;
     MeshCollider collider;
-    public int randomMesh;
+    //public int randomMesh;
 
 
     private void Start()

@@ -8,7 +8,7 @@ public class Zombie : MonoBehaviour
     public GameObject dropPref;
     [SerializeField] int dropCount =5;
     [SerializeField] private  List<Mesh> ZombiePartsMesh;
-
+    [SerializeField] private float throwingStrength = 0.5f;
 
 
     public void SteppedHead()
@@ -66,7 +66,7 @@ public class Zombie : MonoBehaviour
                 rig = go.AddComponent<Rigidbody>();
             }
             //날려주기
-            rig.AddForce(new Vector3(Random.Range(-0.3f, 0.3f), Random.Range(0.3f, 0.6f), Random.Range(-0.3f, 0.3f)), ForceMode.Impulse);
+            rig.AddForce(new Vector3(Random.Range(-throwingStrength, throwingStrength), Random.Range(0.3f, 0.6f), Random.Range(-throwingStrength, throwingStrength)), ForceMode.Impulse);
         }
     }
 
