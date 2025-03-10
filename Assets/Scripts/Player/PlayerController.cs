@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask floorLayerMask;
     [SerializeField] private LayerMask enemyheadLayerMask;
 
-    public Action interactAction;
+    public Action<Wrapping> interactAction;
 
     void Start()
     {
@@ -233,8 +233,14 @@ public class PlayerController : MonoBehaviour
 
     public void OnInteractionInput(InputAction.CallbackContext context)
     {
-        GameManager.Instance.player.interaction.interactableObject?.AddMethod();
+        IInteractable interactableObject = GameManager.Instance.player.interaction.interactableObject;
+
+        if(interactableObject != null)
+        {
+        interactableObject.SubscribeMethod();
+
         if (context.phase == InputActionPhase.Started)
-            interactAction?.Invoke();
+            interactAction?.Invoke(interactableObject.GetNeedThing());
+        }
     }
 }

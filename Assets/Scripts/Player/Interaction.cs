@@ -3,11 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class Wrapping 
+{
+    public ItemData _itemData;
+}
 public interface IInteractable // 현재 상호작용 가능한 것: 드랍 아이템
 {
-    public void AddMethod();
+    public void SubscribeMethod();
 
     public GameObject GetRoot();
+
+    public Wrapping GetNeedThing();
 }
 
 public class Interaction : MonoBehaviour
