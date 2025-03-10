@@ -12,11 +12,11 @@ public class ConditionUI : MonoBehaviour//, Updateable
     private Transform Hunger;
 
     [Header("¿ÃπÃ¡ˆ")]
-    private Slider healthGage;
-    private Slider hungerGage;
+    [SerializeField] private Slider healthGage;
+    [SerializeField] private Slider hungerGage;
     private int bulletCount;
     private Image[] bulletArray;
-    private int curBullet;
+    private int curBulletCount;
 
     private void Awake()
     {
@@ -29,10 +29,12 @@ public class ConditionUI : MonoBehaviour//, Updateable
         {
             bulletArray = Bullets.GetComponentsInChildren<Image>();
         }
+        curBulletCount = 40;
+
         Health = transform.GetChild(1);
         Hunger = transform.GetChild(1);
 
-        player = Player.Instance.condition;
+        player = GameManager.Instance.player.condition;
     }
 
     private void Update()
@@ -42,25 +44,27 @@ public class ConditionUI : MonoBehaviour//, Updateable
         bulletImageEnable(player.GetBulletCount());
     }
 
-    void bulletImageEnable(int bulletNum)
+    void bulletImageEnable(int bulletCount)
     {
-        if (curBullet == bulletNum) return;
+        if (curBulletCount == bulletCount) return;
 
 
-        if (curBullet > bulletNum)
+        if (curBulletCount > bulletCount)
         {
-            for (int i = 0; i < curBullet - bulletNum; i++)
+            for (int i = bulletCount; i < curBulletCount; i++)
             {
-                bulletArray[curBullet - i].enabled = false;
+                bulletArray[i].enabled = false;
             }
         }
         else
         {
-            for (int i = 0; i < bulletNum - curBullet; i++)
+            for (int i = curBulletCount; i < bulletCount; i++)
             {
-                bulletArray[curBullet + i].enabled = true;
+                bulletArray[i].enabled = true;
             }
 
         }
+
+        curBulletCount = bulletCount;
     }
 }

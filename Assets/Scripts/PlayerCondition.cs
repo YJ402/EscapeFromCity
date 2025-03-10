@@ -8,11 +8,12 @@ public class PlayerCondition : MonoBehaviour
     [SerializeField] private float maxHealth = 100;
     [SerializeField] private float health;
     public float Health { get { return health; } set { health = value; } }
+    [SerializeField] private float healthCoefficient = 0.3f;
 
     [SerializeField] private float maxHunger = 100;
     [SerializeField] private float hunger;
     public float Hunger { get { return hunger; } set { hunger = value; } }
-    private float hungerCoefficient = 0.1f;
+    [SerializeField] private float hungerCoefficient = 1f;
 
     [SerializeField] private int maxBulletCount = 40;
     [SerializeField] private int bulletCount;
@@ -22,11 +23,14 @@ public class PlayerCondition : MonoBehaviour
     {
         hunger = maxHunger;
         health = maxHealth;
+        bulletCount = 0;
     }
     private void Update()
     {
         hunger -= Time.deltaTime * hungerCoefficient;
-        Debug.Log("hunger");
+
+        if(hunger < 0)
+            health -= Time.deltaTime * healthCoefficient;
     }
 
     public float GetHealthGage()
@@ -36,7 +40,7 @@ public class PlayerCondition : MonoBehaviour
 
     public float GetHungerGage()
     {
-        return health / maxHealth;
+        return hunger / maxHunger;
     }
 
     public int GetBulletCount()

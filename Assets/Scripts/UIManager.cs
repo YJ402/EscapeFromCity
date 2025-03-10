@@ -9,54 +9,38 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    private static UIManager _instance;
-    public static UIManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = new GameObject("UIManager").AddComponent<UIManager>();
-            }
-            return _instance;
-        }
-    }
-
-    //Updateable[] UpdateableUI;
-
-    private void Awake()
-    {
-        if (_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            if (_instance != this)
-            {
-                Destroy(gameObject);
-            }
-        }
-
-
-    }
-
-    //private void Start()
+    //private static UIManager _instance;
+    //public static UIManager Instance
     //{
-    //    StartScene();
-    //}
-
-    //void StartScene()
-    //{
-    //    UpdateableUI = transform.GetComponentsInChildren<Updateable>();
-    //}
-
-    //public void UpdateUIs()
-    //{
-    //    for(int i = 0; UpdateableUI.Length < i; i++)
+    //    get
     //    {
-    //        UpdateableUI[i].UpdateUI();
+    //        if (_instance == null)
+    //        {
+    //            _instance = new GameObject("UIManager").AddComponent<UIManager>();
+    //        }
+    //        return _instance;
     //    }
     //}
+
+    ////Updateable[] UpdateableUI;
+
+    //private void Awake()
+    //{
+    //    if (_instance == null)
+    //    {
+    //        _instance = this;
+    //        DontDestroyOnLoad(gameObject);
+    //    }
+    //    else
+    //    {
+    //        if (_instance != this)
+    //        {
+    //            Destroy(gameObject);
+    //        }
+    //    }
+
+
+    //}
+
+
 }

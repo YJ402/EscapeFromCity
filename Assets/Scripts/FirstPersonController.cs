@@ -32,7 +32,7 @@ public class FirstPersonController : MonoBehaviour
 
     private void LateUpdate()
     {
-        RotateCam(Player.Instance.controller.mouseDelta);
+        RotateCam(GameManager.Instance.player.controller.mouseDelta);
     }
 
     // z축은 고정. 

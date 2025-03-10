@@ -17,8 +17,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    UIManager UI;
-    Player player;
+    public UIManager UI;
+    public Player player;
 
     private void Awake()
     {
@@ -35,8 +35,10 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        UI = UIManager.Instance;
-        player = Player.Instance;   
+        UI = FindObjectOfType<UIManager>();
+        player = FindObjectOfType<Player>();
+
+        player.Init();
     }
 
     
