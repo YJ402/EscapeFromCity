@@ -4,6 +4,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Button = UnityEngine.UI.Button;
 
 public class ItemPopupUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -19,6 +21,8 @@ public class ItemPopupUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public GameObject useBtn;
     public GameObject dropBtn;
 
+    Inven_Item item;
+
     public bool isHoverPopup;
     private void Start()
     {
@@ -27,10 +31,10 @@ public class ItemPopupUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         unequipBtn.SetActive(false);
         useBtn.SetActive(false);
     }
-    public void SetActive(int slotIndex, Vector3 position, Inven_ItemData _item)
+    public void SetActive(int slotIndex, Vector3 position, Inven_Item _item)
     {
         BG.SetActive(true);
-        Inven_ItemData item = _item;
+        item = _item;
         itemName.text = item.itemData.item_name;
         itemDescription.text = item.itemData.item_description;
 
@@ -46,10 +50,14 @@ public class ItemPopupUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                     if (item.isEquiped)
                     {
                         unequipBtn.SetActive(true);
+                        unequipBtn.GetComponent<Button>().onClick.RemoveAllListeners();
+                        unequipBtn.GetComponent<Button>().onClick.AddListener(item.Equip);
                     }
                     else
                     {
                         equipBtn.SetActive(true);
+                        equipBtn.GetComponent<Button>().onClick.RemoveAllListeners();
+                        equipBtn.GetComponent<Button>().onClick.AddListener(item.Equip);
                     }
                 }
                 break;
@@ -61,6 +69,8 @@ public class ItemPopupUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                     statValue.text += stat.value.ToString() + "\n";
                 }
                 useBtn.SetActive(true);
+                useBtn.GetComponent<Button>().onClick.RemoveAllListeners();
+                useBtn.GetComponent<Button>().onClick.AddListener(item.Use);
                 break;
         }
 
@@ -100,4 +110,6 @@ public class ItemPopupUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         yield return new WaitForSeconds(0.1f);
         isHoverPopup = TF;
     }
+
+
 }

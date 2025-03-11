@@ -14,7 +14,7 @@ public class SlotUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
     public Image image;
     public TextMeshProUGUI TMP_Count;
 
-    private bool isPopupOn;
+    //private bool isPopupOn;
 
     public bool isHoverSlot;
 
@@ -36,7 +36,7 @@ public class SlotUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
     {
         if (slotIndex < inventoryUI.inventoryData.items.Count)
         {
-            Co_ItemInfo = StartCoroutine(ItemInfo());
+            Co_ItemInfo = StartCoroutine(ShowItemPopup());
             //isHoverSlot = true;
             StartCoroutine(SwitchHover(true));
 
@@ -57,33 +57,33 @@ public class SlotUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
 
         //GameManager.Instance.UI.itemPopupUI.SetDeactive(isHoverSlot);
         //isPopupOn = false;
-        StartCoroutine(DeactivePopup());
+        StartCoroutine(HideItemPopup());
     }
 
-    IEnumerator ItemInfo()
+    IEnumerator ShowItemPopup()
     {
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(0.8f);
 
         //if (isHovering)
         {
             // 아이템 정보 팝업 표시
             Debug.Log($"{slotIndex}번 슬롯에 아이템 정보 표시");
             GameManager.Instance.UI.itemPopupUI.SetActive(slotIndex, transform.position, inventoryUI.inventoryData.items[slotIndex]);
-            isPopupOn = true;
+            //isPopupOn = true;
         }
     }
     IEnumerator SwitchHover(bool TF)
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.01f);
 
         isHoverSlot = TF;
     }
 
-    IEnumerator DeactivePopup()
+    IEnumerator HideItemPopup()
     {
         yield return new WaitForSeconds(0.15f);
 
         GameManager.Instance.UI.itemPopupUI.SetDeactive(isHoverSlot);
-        isPopupOn = false;
+        //isPopupOn = false;
     }
 }

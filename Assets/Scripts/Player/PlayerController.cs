@@ -260,6 +260,7 @@ public class PlayerController : MonoBehaviour
         {
             player.playerState = PlayerState.Navigation;
             UI.inventoryUI.gameObject.SetActive(false);
+            UI.itemPopupUI.SetDeactive(false);
             Cursor.lockState = CursorLockMode.Locked;
         }
     }

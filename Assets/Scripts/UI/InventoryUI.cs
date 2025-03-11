@@ -13,17 +13,6 @@ public class InventoryUI : MonoBehaviour
     {
         inventoryData = GameManager.Instance.player.inventory;
 
-        //gameObjects = new GameObject[transform.childCount];
-        //for (int i = 0; i < transform.childCount; i++)
-        //{
-        //    gameObjects[i] = transform.GetChild(i).gameObject;
-        //}
-
-        //foreach (GameObject go in gameObjects)
-        //{
-        //    go.AddComponent<SlotUI>();
-        //}
-
         slotUIs = GetComponentsInChildren<SlotUI>();
         for (int i = 0; i < slotUIs.Length; i++)
         {
@@ -46,7 +35,7 @@ public class InventoryUI : MonoBehaviour
                 if (inventoryData.items[i].itemData.canStack)
                 {
                 slotUIs[i].TMP_Count.gameObject.SetActive(true);
-                    slotUIs[i].TMP_Count.text = inventoryData.items[i].itemCount.ToString();
+                    slotUIs[i].TMP_Count.text = inventoryData.items[i].ItemCount.ToString();
                 }
 
             }
