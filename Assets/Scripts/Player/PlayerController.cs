@@ -5,29 +5,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
-public enum MovementState
-{
-    Idle,
-    Walking,
-    Running,
-    Jumping
-}
-
-// 방향 상태
-public enum MovementDirection
-{
-    Forward,
-    Backward
-}
-
-// 점프 세부 단계
-public enum JumpPhase
-{
-    None,   // 점프 아닐 때
-    Rise,   // 도약
-    Float,  // 부양
-    Land    // 착지
-}
 
 public class PlayerController : MonoBehaviour
 {

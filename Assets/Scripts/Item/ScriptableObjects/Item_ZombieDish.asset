@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 1
   item_name: "\uB178\uB987\uB178\uB987\uD55C \uACE0\uAE30"
-  item_description: "\uBCC4\uBBF8\uB2E4."
+  item_description: "\uB9DB, \uBE44\uC8FC\uC5BC, \uC704\uC0DD \uBB50 \uD558\uB098
+    \uBE60\uC9C0\uC9C0 \uC54A\uB294 \uBCC4\uBBF8\uB2E4."
   canStack: 1
   maxStack: 12
   dropPref: {fileID: 1126592588545134399, guid: e565949bea6efd84d9c15391fe6ca956, type: 3}

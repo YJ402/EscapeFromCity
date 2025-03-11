@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Item_ZombiePart
   m_EditorClassIdentifier: 
   itemType: 1
-  item_name: "\uC880\uBE44 \uC2E0\uCCB4"
+  item_name: "\uC880\uBE44 \uD30C\uD3B8"
   item_description: "\uD30C\uAD34\uB41C \uC880\uBE44\uC758 \uC2E0\uCCB4 \uC77C\uBD80\uBD84\uC774\uB2E4."
   canStack: 1
   maxStack: 12
