@@ -20,7 +20,9 @@ public class Zombie : MonoBehaviour
     {
         //모든 컴포넌트 비활성화.
         GetComponent<Collider>().enabled = false;
+        Destroy(GetComponent<Collider>());
         GetComponent<Animator>().enabled = false;
+        Destroy(GetComponent<Animator>());
         Destroy(GetComponent<Rigidbody>());
 
         //자식 객체 삭제
@@ -29,43 +31,40 @@ public class Zombie : MonoBehaviour
             Destroy(transform.GetChild(i).gameObject);
         }
         
-        Throw();
+        ItemDrop();
         StartCoroutine(Disappear());
     }
 
-    private void Throw()
+    private void ItemDrop()
     {
         GameObject go;
         Rigidbody rig;
         DropPrefAdjust dropPrefAdjust;
         List<int> hash = new();
         
+        //중복하지 않는 랜덤숫자를 dropCount만큼 뽑기
         while(hash.Count < dropCount)
         {
             int i = Random.Range(0, ZombiePartsMesh.Count);
-            //if (hash.Contains(i)) break;
+            if (hash.Contains(i)) continue;
             hash.Add(i);
         }
 
-        //생성
+        //dropCount만큼 생성 반복.
         for (int i = 0; i < dropCount; i++)
         {
-            //객체 생성
+            //dropPref 객체 생성
             go = Instantiate(dropPref, transform.position, Random.rotation);
             go.transform.SetParent(transform, true);
             go.transform.localScale = Vector3.one;
             
-            //메쉬 랜덤 지정.
+            //생성된 객체의 메쉬 랜덤 지정.
             dropPrefAdjust = go.GetComponentInChildren<DropPrefAdjust>();
             dropPrefAdjust.Init();
             dropPrefAdjust.LoadMesh(ZombiePartsMesh[hash[i]]);
 
-            //rigidbody 없다면 붙여주기
-            if (!go.TryGetComponent<Rigidbody>(out rig))
-            {
-                rig = go.AddComponent<Rigidbody>();
-            }
             //날려주기
+            rig = go.GetComponent<Rigidbody>();
             rig.AddForce(new Vector3(Random.Range(-throwingStrength, throwingStrength), Random.Range(0.3f, 0.6f), Random.Range(-throwingStrength, throwingStrength)), ForceMode.Impulse);
         }
     }

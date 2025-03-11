@@ -56,6 +56,8 @@ public class ItemData : ScriptableObject
 
     [Header("소비템")]
     public ItemData_Consumable[] ItemData_Consumables;
+    public bool isCookable;
+    public ItemData CookedThing;
 
     [Header("장비템")]
     public ItemData_Equipable[] itemData_Equipables;

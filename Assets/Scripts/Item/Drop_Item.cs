@@ -7,7 +7,7 @@ using UnityEngine;
 public class Drop_Item : MonoBehaviour, IInteractable
 {
     public ItemData itemData;
-    public GameObject rootObject;
+    public GameObject rootObject; // 필요없을듯.
 
     public void SubscribeMethod()
     {
@@ -32,4 +32,5 @@ public class Drop_Item : MonoBehaviour, IInteractable
     {
         return (itemData.item_name, itemData.item_description);
     }
+
 }

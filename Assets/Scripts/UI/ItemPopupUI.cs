@@ -74,13 +74,16 @@ public class ItemPopupUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 break;
         }
 
+        dropBtn.GetComponent<Button>().onClick.RemoveAllListeners();
+        dropBtn.GetComponent<Button>().onClick.AddListener(item.Throw);
+
         //위치 조정. 슬롯 바로 옆에
         transform.position = new Vector3(position.x + 150, position.y - 200);
     }
 
-    public void SetDeactive(bool isHoverSlot)
+    public void SetDeactive(bool isHoverSlot, bool absoulte = false)
     {
-        if (!isHoverSlot && !isHoverPopup) // 근데 팝업이 꺼지면 참인채로 남아있을 수도.
+        if (absoulte || (!isHoverSlot && !isHoverPopup)) // 근데 팝업이 꺼지면 참인채로 남아있을 수도.
         {
             BG.SetActive(false);
 

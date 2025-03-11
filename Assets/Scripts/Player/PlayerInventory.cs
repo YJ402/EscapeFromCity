@@ -62,5 +62,6 @@ public class PlayerInventory : MonoBehaviour
         }
         // 안남아있으면 해쉬에서도 삭제.
         hash_ItemsData.Remove(_item.itemData);
+        GameManager.Instance.UI.itemPopupUI.SetDeactive(false, true);
     }
 }

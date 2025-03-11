@@ -8,7 +8,7 @@ public class Inven_Item
 {
     public ItemData itemData;
     private int itemCount = 1;
- 
+
     public int ItemCount
     {
         get { return itemCount; }
@@ -63,10 +63,22 @@ public class Inven_Item
     {
         Debug.Log($"{itemData.item_name}을 장착해제함");
         // 아이템 버리기
-            //아이템 1개 감소
+        //아이템 1개 감소
         ItemCount--;
         GameManager.Instance.UI.inventoryUI.UpdateUI();
-            //dropItem 생성해서 앞에 던지기.
+        //dropItem 생성해서 앞에 던지기.
+
+        //dropPref 객체 생성
+        //GameObject go = Instantiate(itemData.dropPref, GameManager.Instance.player.gameObject.transform.position, Random.rotation); // 원래 이래서 instantiate 못썼는데 앞에 object 붙여주니까 되는거 같네
+        GameObject go = Object.Instantiate(itemData.dropPref, GameManager.Instance.player.gameObject.transform.position, Random.rotation);
+
+        //go.transform.SetParent(transform, true);
+        //go.transform.localScale = Vector3.one;
+
+        //날려주기
+        Rigidbody rig = go.GetComponent<Rigidbody>();
+        rig.AddForce(Vector3.forward, ForceMode.Impulse);
+
     }
 }
 

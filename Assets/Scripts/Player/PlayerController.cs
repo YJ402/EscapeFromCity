@@ -156,12 +156,10 @@ public class PlayerController : MonoBehaviour
             Debug.Log("충격량:" + contactPower);
             rigidbody.AddForce(contactPoints[Random.Range(0, contactPoints.Length)].normal * (contactPower * 1.5f), ForceMode.Impulse);
         }
+
+        touchingGrounds.RemoveWhere(item => item == null); // 좀비 머리 밟으면 좀비가 죽으면서 collider 삭제됨. >> null 값으로 해쉬에 남아 있음. 이거 제거.
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-
-    }
 
     private void OnCollisionStay(Collision collision)
     {
@@ -260,7 +258,7 @@ public class PlayerController : MonoBehaviour
         {
             player.playerState = PlayerState.Navigation;
             UI.inventoryUI.gameObject.SetActive(false);
-            UI.itemPopupUI.SetDeactive(false);
+            UI.itemPopupUI.SetDeactive(false, true);
             Cursor.lockState = CursorLockMode.Locked;
         }
     }

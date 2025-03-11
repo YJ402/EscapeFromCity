@@ -7,12 +7,21 @@ using UnityEngine;
 public class Wrapping 
 {
     public ItemData _itemData;
+
+    public Wrapping(ItemData itemdata)
+    {
+        _itemData = itemdata;
+    }
+
+    public Wrapping()
+    {
+    }
 }
 public interface IInteractable // 현재 상호작용 가능한 것: 드랍 아이템
 {
     public void SubscribeMethod();
 
-    public GameObject GetRoot(); // 필요없을 수도.
+    //public GameObject GetRoot(); // 필요없을 수도.
 
     public Wrapping GetNeedThing();
 
@@ -43,7 +52,7 @@ public class Interaction : MonoBehaviour
             {
                     Debug.LogError($"{hit.transform.gameObject} 오브젝트는 InteractableLayerMask 임에도 IInteractable 컴포넌트가 없습니다.");
             }
-            interactingObject = interactableObject.GetRoot();
+            //interactingObject = interactableObject.GetRoot();
 
             promptUI.ShowPrompt(interactableObject);
         }
@@ -51,7 +60,7 @@ public class Interaction : MonoBehaviour
         {
             // 비우기
             interactableObject = null;
-            interactingObject = null;
+            //interactingObject = null;
             promptUI.HidePrompt();
         }
     }
