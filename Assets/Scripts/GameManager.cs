@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
@@ -19,7 +21,6 @@ public class GameManager : MonoBehaviour
 
     public UIManager UI;
     public Player player;
-
     private void Awake()
     {
         if (_instance == null)
@@ -35,12 +36,11 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        UI = FindObjectOfType<UIManager>();
         player = FindObjectOfType<Player>();
+        UI = FindObjectOfType<UIManager>();
 
         player.Init();
+        UI.Init();
     }
-
-    
 
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+
 public class DropItem : MonoBehaviour, IInteractable
 {
     public ItemData itemData;
@@ -27,14 +28,8 @@ public class DropItem : MonoBehaviour, IInteractable
         return wrapped;
     }
 
-    void Start()
+    public (string,string) GetPromptInfo()
     {
-            
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        return (itemData.item_name, itemData.item_description);
     }
 }

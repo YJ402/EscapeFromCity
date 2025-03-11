@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 1
   item_name: "\uC880\uBE44 \uC2E0\uCCB4"
-  item_description: "\uD30C\uACE0\uB41C \uC880\uBE44\uC758 \uC2E0\uCCB4 \uC77C\uBD80\uBD84\uC774\uB2E4."
+  item_description: "\uD30C\uAD34\uB41C \uC880\uBE44\uC758 \uC2E0\uCCB4 \uC77C\uBD80\uBD84\uC774\uB2E4."
   canStack: 1
   maxStack: 12
   dropPref: {fileID: 1126592588545134399, guid: e565949bea6efd84d9c15391fe6ca956, type: 3}
+  Image: {fileID: 21300000, guid: a70b8c0a29fb59145adef6f1fe1324c8, type: 3}
   ItemData_Consumables:
   - consumableType: 1
     value: 30
   - consumableType: 0
     value: -5
-  itemData_Equipable:
-    equipableType: []
-    EquipPref: {fileID: 0}
+  itemData_Equipables: []
+  EquipPref: {fileID: 0}

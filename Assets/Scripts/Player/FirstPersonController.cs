@@ -17,7 +17,7 @@ public class FirstPersonController : MonoBehaviour
     float currentRotY; // 플레이어 y회전값
     Vector3 targetRot;
 
-
+    Player player;
 
     private void Start()
     {
@@ -27,12 +27,15 @@ public class FirstPersonController : MonoBehaviour
         targetRot = new Vector3(currentRotX, currentRotY, 0);
 
         Cursor.lockState = CursorLockMode.Locked;
+
+        player = GameManager.Instance.player;
     }
 
 
     private void LateUpdate()
     {
-        RotateCam(GameManager.Instance.player.controller.mouseDelta);
+        if (player.playerState == PlayerState.Navigation)
+            RotateCam(GameManager.Instance.player.controller.mouseDelta);
     }
 
     // z축은 고정. 

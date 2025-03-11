@@ -9,7 +9,7 @@ public class Inven_ItemData
     public ItemData itemData;
     public ItemType type;
     public int itemCount = 1;
-    bool isEquiped = false;
+    public bool isEquiped = false;
 
     public void Init()
     {
@@ -23,7 +23,7 @@ public class PlayerInventory : MonoBehaviour
     public List<Inven_ItemData> items = new(); // 실제로 갖고 있는 아이템들과 그 갯수등 정보.
     public HashSet<ItemData> hash_ItemsData = new(); // 갖고 있는 아이템 종류 (단순 중복 여부 체크용)
 
-    private int inventoryFull = 24;
+    private int inventoryFull = 25;
     public void AddItem(Wrapping wrapping)
     {
         if (items.Count > inventoryFull)
@@ -48,6 +48,7 @@ public class PlayerInventory : MonoBehaviour
                 if (item.itemData == p_itemData && item.itemCount < item.itemData.maxStack)
                 {
                     item.itemCount++;
+                    GameManager.Instance.UI.inventoryUI.UpdateUI();
                     return;
                 }
             }
@@ -56,6 +57,8 @@ public class PlayerInventory : MonoBehaviour
         //위에서 실패하면 items랑 Hash에 새로 추가해주고 끝
         items.Add(p_itemData_warpped);
         hash_ItemsData.Add(p_itemData);
+
+        GameManager.Instance.UI.inventoryUI.UpdateUI();
     }
 
     public void RemoveItem(Inven_ItemData _item) //테스트 안해봄

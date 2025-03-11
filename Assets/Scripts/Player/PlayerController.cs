@@ -62,6 +62,9 @@ public class PlayerController : MonoBehaviour
 
     public Action<Wrapping> interactAction;
 
+    Player player;
+    UIManager UI;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -69,10 +72,8 @@ public class PlayerController : MonoBehaviour
         cam = Camera.main;
         rigidbody = GetComponent<Rigidbody>();
 
-        // 애니 플레이 속도 초기화
-        //def_moveSpeed = 1 *
-        //moveAnimPlaySpeed  = def_moveSpeed  / moveSpeed;
-
+        player = GameManager.Instance.player;
+        UI = GameManager.Instance.UI;
     }
 
     void Update()
@@ -81,10 +82,11 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move();
-        //Debug.Log("땅인가?" + isGrounded);
-        //Debug.Log("점프?" + jumpInput);
-        Jump();
+        if (player.playerState == PlayerState.Navigation)
+        {
+            Move();
+            Jump();
+        }
         animator.SetBool("Grounded", isGrounded);
     }
 
@@ -235,12 +237,30 @@ public class PlayerController : MonoBehaviour
     {
         IInteractable interactableObject = GameManager.Instance.player.interaction.interactableObject;
 
-        if(interactableObject != null)
+        if (interactableObject != null)
         {
-        interactableObject.SubscribeMethod();
+            interactableObject.SubscribeMethod();
 
-        if (context.phase == InputActionPhase.Started)
-            interactAction?.Invoke(interactableObject.GetNeedThing());
+            if (context.phase == InputActionPhase.Started)
+                interactAction?.Invoke(interactableObject.GetNeedThing());
+        }
+    }
+
+    public void OnPlayStateInput(InputAction.CallbackContext context)
+    {
+        if (context.phase != InputActionPhase.Started) return;
+
+        if (player.playerState == PlayerState.Navigation)
+        {
+            player.playerState = PlayerState.UI;
+            UI.inventoryUI.gameObject.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else if (player.playerState == PlayerState.UI)
+        {
+            player.playerState = PlayerState.Navigation;
+            UI.inventoryUI.gameObject.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
         }
     }
 }

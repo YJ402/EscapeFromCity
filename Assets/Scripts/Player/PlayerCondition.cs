@@ -27,10 +27,16 @@ public class PlayerCondition : MonoBehaviour
     }
     private void Update()
     {
-        hunger -= Time.deltaTime * hungerCoefficient;
-
-        if(hunger < 0)
+        if (hunger > 0)
+        {
+            hunger -= Time.deltaTime * hungerCoefficient;
+        }
+        else if (hunger <= 0)
+        {
             health -= Time.deltaTime * healthCoefficient;
+            hunger = 0;
+        }
+
     }
 
     public float GetHealthGage()

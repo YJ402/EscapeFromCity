@@ -31,16 +31,16 @@ public class ItemData_Consumable
 [System.Serializable]
 public class ItemData_Equipable
 {
-    public ItemData_Equipable_Value[] equipableType;
-    public GameObject EquipPref;
-}
-
-[System.Serializable]
-public class ItemData_Equipable_Value
-{
-    public EquipableType equipableType;
+    public EquipableType equipableType; // 너는 왜 배열일까?? 해둔 이유가 있었는데 기억이 안나네.
     public float value;
 }
+
+//[System.Serializable]
+//public class ItemData_Equipable_Value
+//{
+//    public EquipableType equipableType;
+//    public float value;
+//}
 
 [CreateAssetMenu(fileName = "Item", menuName = "New Item")]
 public class ItemData : ScriptableObject 
@@ -52,10 +52,12 @@ public class ItemData : ScriptableObject
     public bool canStack;
     public int maxStack = 12;
     public GameObject dropPref;
+    public Sprite Image;
 
     [Header("소비템")]
     public ItemData_Consumable[] ItemData_Consumables;
 
     [Header("장비템")]
-    public ItemData_Equipable itemData_Equipable;
+    public ItemData_Equipable[] itemData_Equipables;
+    public GameObject EquipPref;
 }
