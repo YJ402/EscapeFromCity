@@ -58,6 +58,16 @@ public class Inven_Item
         isEquiped = false;
         GameManager.Instance.UI.inventoryUI.UpdateUI();
     }
+
+    public void Throw()
+    {
+        Debug.Log($"{itemData.item_name}을 장착해제함");
+        // 아이템 버리기
+            //아이템 1개 감소
+        ItemCount--;
+        GameManager.Instance.UI.inventoryUI.UpdateUI();
+            //dropItem 생성해서 앞에 던지기.
+    }
 }
 
 //public class Inven_ConsumableItem : Inven_Item

@@ -71,7 +71,7 @@ public class Zombie : MonoBehaviour
     }
 
 
-    IEnumerator Disappear()
+    IEnumerator Disappear() // 2분 후 드랍아이템 사라짐
     {
         yield return new WaitForSeconds(120f);
 
